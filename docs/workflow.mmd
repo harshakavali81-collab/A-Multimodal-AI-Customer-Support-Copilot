@@ -1,0 +1,12 @@
+flowchart TD
+ A[Customer message and files] --> B[Extract and redact]
+ K[Approved policies] --> C[Chunk and vectorize]
+ B --> R[Retrieve sources]
+ C --> R
+ R --> E{Evidence available?}
+ E -->|Yes| D[Draft with citations]
+ E -->|No| X[Escalate]
+ D --> H[Agent review]
+ H --> S[Save ticket decision]
+ X --> S
+ S --> M[Review feedback and evaluate]

@@ -1,0 +1,1 @@
+My payment failed with error PAY-402. What should I check before trying again?
