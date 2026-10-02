@@ -1,9 +1,14 @@
 import io, os, subprocess, tempfile
 from pathlib import Path
+from functools import lru_cache
 from pypdf import PdfReader
 from PIL import Image
 MAX_BYTES=10*1024*1024
 AUDIO={'.wav','.mp3','.m4a','.ogg','.flac'}
+@lru_cache(maxsize=1)
+def audio_model():
+    from faster_whisper import WhisperModel
+    return WhisperModel(os.getenv('WHISPER_MODEL','tiny'),device='cpu',compute_type='int8')
 def extract(name,data):
     if len(data)>MAX_BYTES: raise ValueError('Each attachment must be at most 10 MB')
     ext=Path(name).suffix.lower()
@@ -26,7 +31,7 @@ def extract(name,data):
         except ImportError: raise ValueError('Audio requires: pip install -r requirements-audio.txt')
         with tempfile.TemporaryDirectory() as td:
             path=Path(td)/('input'+ext);path.write_bytes(data)
-            model=WhisperModel(os.getenv('WHISPER_MODEL','tiny'),device='cpu',compute_type='int8')
+            model=audio_model()
             segments,info=model.transcribe(str(path),beam_size=3)
             if info.duration>120: raise ValueError('Audio limit is two minutes')
             text=' '.join(s.text for s in segments)

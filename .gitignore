@@ -4,3 +4,5 @@ __pycache__/
 runtime/
 .env
 *.log
+model-cache/
+*.inspect.ndjson

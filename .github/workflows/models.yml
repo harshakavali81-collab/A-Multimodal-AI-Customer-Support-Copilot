@@ -1,0 +1,22 @@
+name: Live model tests
+on:
+  workflow_dispatch:
+jobs:
+  models:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -r requirements-models.txt
+      - run: python scripts/test_models.py
+        env:
+          HF_HUB_DISABLE_XET: "1"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: model-validation
+          path: reports/model_validation.json

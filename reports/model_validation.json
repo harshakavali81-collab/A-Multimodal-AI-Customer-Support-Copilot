@@ -1,0 +1,33 @@
+[
+  {
+    "name": "semantic_retrieval",
+    "passed": true,
+    "seconds": 3.93,
+    "detail": {
+      "top_source": "login:1",
+      "model": "all-MiniLM-L6-v2"
+    }
+  },
+  {
+    "name": "audio_transcription",
+    "passed": true,
+    "seconds": 1.46,
+    "detail": {
+      "fixture_url": "https://raw.githubusercontent.com/openai/whisper/main/tests/jfk.flac",
+      "transcript": " And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country.",
+      "model": "tiny",
+      "scope": "Audio transcription component only; historical speech, not customer support audio"
+    }
+  },
+  {
+    "name": "generated_cited_draft",
+    "passed": true,
+    "seconds": 5.1,
+    "detail": {
+      "mode": "transformers",
+      "draft": "For PAY-402 payment failed errors, please check your billing address and card expiry. Then try again once. Do not retry repeatedly. If the payment remains pending, escalate it to billing with the order reference. Never request a full card number or CVV.\n\nSource provided: [payments:1]",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "scope": "Single cited draft smoke test, not factual-accuracy benchmark"
+    }
+  }
+]

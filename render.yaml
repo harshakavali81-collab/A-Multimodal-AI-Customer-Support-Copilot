@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: multimodal-support-copilot
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: BIND_HOST
+        value: 0.0.0.0
+      - key: PUBLIC_DEMO
+        value: "1"

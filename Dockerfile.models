@@ -1,0 +1,9 @@
+FROM python:3.11-slim
+WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr && rm -rf /var/lib/apt/lists/*
+COPY requirements*.txt ./
+RUN pip install --no-cache-dir torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu && pip install --no-cache-dir -r requirements-models.txt
+COPY . .
+ENV BIND_HOST=0.0.0.0 PUBLIC_DEMO=1 LLM_BACKEND=transformers SEMANTIC_SEARCH=1 HF_HOME=/app/model-cache
+RUN python scripts/download_models.py
+CMD ["python", "app.py"]
